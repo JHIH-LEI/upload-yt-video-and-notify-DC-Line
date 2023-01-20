@@ -1,20 +1,33 @@
-# upload-yt-video-and-notify-dc
-Upload video to youtube and then notify discord channel.
+# upload-yt-video-and-notify-DC-and-Line
+Upload video to youtube and then notify discord channel and Line Official Account.
+# 上傳yt推送到dc
 
 # Demo
 執行main.py的結果：
+
 ![](https://i.imgur.com/s206GSy.png)
+
+New Video On YouTube:
+
 ![](https://i.imgur.com/BGsPLJP.png)
+
+Discord Notify:
+
 ![](https://i.imgur.com/B3Hpm0x.png)
+
+Line Notify:
+
+![](https://i.imgur.com/pidWies.png)
 
 # How To Use?
 
-我們需要5樣東西，有四樣會作為function的參數傳入，token則放在dotenv檔：
+我們需要6樣東西，有四樣會作為function的參數傳入，token則放在dotenv檔：
 * OAuth憑證
 * 要上傳的影片（我們需要它的路徑）
 * Youtube頻道id
 * Discord頻道id
 * Discord機器人token
+* Line官方帳號(請跟著步驟設置)
 
 請注意：
 
@@ -95,12 +108,60 @@ https://discord.com/developers/applications
 
 
 
-### Now You Get Everything You Need!
+# Line Setting
+
+Line is very popular in Asia especially in Taiwan almost everyone use Line as their primary message app.
+
+If you don't need it, just comment notify_to_line() in main.py.
+
+If you like to use. Please follow blow instruction:
+
+prerequisite: Have a [Line](https://line.me/zh-hant/) Account.
+
+## Step1: Create Line Channel (Or add channel to your Line Official Account)
+
+[LINE Developers Console.](https://developers.line.biz/console/)
+
+Note: When you create the channel, the LINE Official Account will also be automatically generated.
+
+## Step2: Copy Your Channel ID. Put Into .env File (LINE_CHANNEL_ID)
+
+[LINE Developers Console](https://developers.line.biz/console/)
+
+![](https://i.imgur.com/QG82vQw.png)
+
+## Step3: In project dir, Execute the following command line in order
+
+1.  ```python generate_assertion_key.py```
+        
+Look at your terminal, Copy public key.
+
+Go to [LINE Developers Console](https://developers.line.biz/console/) Register Assertion Signing Key
+
+-> choose your channel
+-> Register Assertion Signing Key in basic setting page
+
+![](https://i.imgur.com/ezlZAcC.png)
+ 
+-> Copy your kid into .env file as KID key's value.
+      
+![](https://i.imgur.com/C7yQCwM.png)
+
+
+2. ```python generate_jwt.py```
+3.  ```python generate_line_access_token.py```
+
+For safety we use Line access token v2.1.
+For know more you can see [Issue channel access tokens v2.1](https://developers.line.biz/en/docs/messaging-api/generate-json-web-token/).
+
+
+### Now You get everything you need!
 * OAuth json檔
 * 要上傳的影片的檔案路徑
 * 要上傳到的Youtube頻道id
 * Discord頻道id
 * Discord機器人token （放在env檔）
+* Line Official Account setting (token) (make sure you follow above line setting instruction)
 
 
 Let's run program!
@@ -122,6 +183,8 @@ asyncio.run(notify_discord(dc_channel_id=放你dc頻道id, new_video_url=url))
 接著，打開終端機，執行main.py這隻檔案，
 
 
+
+
 運行後會跳出一個授權頁面要你授權，請注意：
 
 **這邊登入的用戶必須等於你剛剛加入到google oauth測試帳號的帳戶也必須等於youtube頻道所有者的帳戶！**
@@ -133,3 +196,7 @@ asyncio.run(notify_discord(dc_channel_id=放你dc頻道id, new_video_url=url))
 成功後會看到以下畫面：
 
 ![](https://i.imgur.com/s206GSy.png)
+
+Now when you upload new video it will broadcast in your Line Official Account:
+
+![](https://i.imgur.com/pidWies.png)
