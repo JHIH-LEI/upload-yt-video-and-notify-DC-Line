@@ -10,17 +10,17 @@ from os.path import getsize
 
 
 # OAuth2
-def get_authenticated_service():
+def get_authenticated_service(secret_file_path):
     scopes = ['https://www.googleapis.com/auth/youtube.upload']
-    flow = InstalledAppFlow.from_client_secrets_file('client_secret_33.json', scopes=scopes)
+    flow = InstalledAppFlow.from_client_secrets_file(secret_file_path, scopes=scopes)
     creds = flow.run_local_server()
     return build('youtube', 'v3', credentials=creds)
 
 
-def upload_video(yt_channel_id, new_video_file_path):
+def upload_video(yt_channel_id, new_video_file_path, secret_file_path):
     try:
         # create youtube api client
-        youtube = get_authenticated_service()
+        youtube = get_authenticated_service(secret_file_path)
         video_file = open(new_video_file_path, 'rb')
         # video_size = getsize(new_video_file_path)
 
